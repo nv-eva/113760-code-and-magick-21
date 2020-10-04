@@ -9,7 +9,6 @@ var GAP_TEXT = 20;
 var GAP_BAR = 50;
 var BAR_WIDTH = 40;
 var BAR_HEIGHT = 150;
-var barHeight = BAR_HEIGHT;
 
 var textTitle = [`Ура вы победили!`, `Список результатов: `];
 
@@ -27,7 +26,19 @@ var renderText = function (ctx, text, x, y) {
   ctx.fillText(text, x, y);
 };
 
-window.renderStatistics = function (ctx, players) {
+var getMaxElement = function (arr) {
+  var maxElement = arr[0];
+
+  for (var k = 1; k < arr.length; k++) {
+    if (arr[k] > maxElement) {
+      maxElement = arr[k];
+    }
+  }
+
+  return maxElement;
+};
+
+window.renderStatistics = function (ctx, players, times) {
   renderCloud(
       ctx,
       CLOUD_X + GAP_SHADOW,
@@ -40,7 +51,7 @@ window.renderStatistics = function (ctx, players) {
       CLOUD_X,
       CLOUD_Y,
       `#fff`,
-      `rgba(0, 0, 0, 0.7)`
+      `rgba(0, 0, 0, 0.5)`
   );
 
   for (var i = 0; i < textTitle.length; i++) {
@@ -52,26 +63,35 @@ window.renderStatistics = function (ctx, players) {
     );
   }
 
+  var maxTime = getMaxElement(times);
+
   for (var j = 0; j < players.length; j++) {
     renderText(
         ctx,
-        players[j],
+        Math.round(times[j]),
         CLOUD_X + GAP_BAR + (GAP_BAR + BAR_WIDTH) * j,
-        CLOUD_Y + GAP_TEXT * (textTitle.length + 1) + 5
+        CLOUD_Y + GAP_TEXT * (textTitle.length + 1) + BAR_HEIGHT - ((BAR_HEIGHT * times[j]) / maxTime)
     );
+
+    if (players[j] === `Вы`) {
+      ctx.fillStyle = `rgba(255, 0, 0, 1)`;
+    } else {
+      var saturation = Math.round(Math.random() * 100) + `%`;
+      ctx.fillStyle = `hsl(240, ${saturation}, 50%)`;
+    }
 
     ctx.fillRect(
         CLOUD_X + GAP_BAR + (GAP_BAR + BAR_WIDTH) * j,
-        CLOUD_Y + GAP_TEXT * (textTitle.length + 1) + 5 + GAP_TEXT,
+        CLOUD_Y + GAP_TEXT * (textTitle.length + 1) + GAP_TEXT + BAR_HEIGHT - ((BAR_HEIGHT * times[j]) / maxTime),
         BAR_WIDTH,
-        barHeight
+        (BAR_HEIGHT * times[j]) / maxTime
     );
 
     renderText(
         ctx,
         players[j],
         CLOUD_X + GAP_BAR + (GAP_BAR + BAR_WIDTH) * j,
-        CLOUD_Y + GAP_TEXT * (textTitle.length + 1) + 15 + GAP_TEXT + BAR_HEIGHT
+        CLOUD_Y + GAP_TEXT * (textTitle.length + 1) + 10 + GAP_TEXT + BAR_HEIGHT
     );
   }
 };
