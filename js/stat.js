@@ -10,7 +10,7 @@ var GAP_BAR = 50;
 var BAR_WIDTH = 40;
 var BAR_HEIGHT = 150;
 
-var textTitle = [`Ура вы победили!`, `Список результатов: `];
+var statisticsTitle = [`Ура вы победили!`, `Список результатов: `];
 
 var renderCloud = function (ctx, x, y, fillColor, strokeColor) {
   ctx.fillStyle = fillColor;
@@ -54,10 +54,10 @@ window.renderStatistics = function (ctx, players, times) {
       `rgba(0, 0, 0, 0.5)`
   );
 
-  for (var i = 0; i < textTitle.length; i++) {
+  for (var i = 0; i < statisticsTitle.length; i++) {
     renderText(
         ctx,
-        textTitle[i],
+        statisticsTitle[i],
         CLOUD_X + GAP_TEXT,
         CLOUD_Y + GAP_TEXT * (i + 1)
     );
@@ -66,11 +66,15 @@ window.renderStatistics = function (ctx, players, times) {
   var maxTime = getMaxElement(times);
 
   for (var j = 0; j < players.length; j++) {
+    var barX = CLOUD_X + GAP_BAR + (GAP_BAR + BAR_WIDTH) * j;
+    var barY = CLOUD_Y + GAP_TEXT * (statisticsTitle.length + 1) + BAR_HEIGHT + 3;
+    var barHeightCurrent = (BAR_HEIGHT * times[j]) / maxTime;
+
     renderText(
         ctx,
         Math.round(times[j]),
-        CLOUD_X + GAP_BAR + (GAP_BAR + BAR_WIDTH) * j,
-        CLOUD_Y + GAP_TEXT * (textTitle.length + 1) + BAR_HEIGHT - ((BAR_HEIGHT * times[j]) / maxTime)
+        barX,
+        barY - barHeightCurrent
     );
 
     if (players[j] === `Вы`) {
@@ -81,17 +85,17 @@ window.renderStatistics = function (ctx, players, times) {
     }
 
     ctx.fillRect(
-        CLOUD_X + GAP_BAR + (GAP_BAR + BAR_WIDTH) * j,
-        CLOUD_Y + GAP_TEXT * (textTitle.length + 1) + GAP_TEXT + BAR_HEIGHT - ((BAR_HEIGHT * times[j]) / maxTime),
+        barX,
+        barY - barHeightCurrent + GAP_TEXT,
         BAR_WIDTH,
-        (BAR_HEIGHT * times[j]) / maxTime
+        barHeightCurrent
     );
 
     renderText(
         ctx,
         players[j],
-        CLOUD_X + GAP_BAR + (GAP_BAR + BAR_WIDTH) * j,
-        CLOUD_Y + GAP_TEXT * (textTitle.length + 1) + 10 + GAP_TEXT + BAR_HEIGHT
+        barX,
+        barY + GAP_TEXT + 10
     );
   }
 };
