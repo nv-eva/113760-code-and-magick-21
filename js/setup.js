@@ -4,54 +4,48 @@ const WIZARD_NAMES = [`Иван`, `Хуан Себастьян`, `Мария`, `
 const WIZARD_SURNAMES = [`да Марья`, `Верон`, `Мирабелла`, `Вальц`, `Онопко`, `Топольницкая`, `Нионго`, `Ирвинг`];
 const WIZARD_COATS = [`rgb(101, 137, 164)`, `rgb(241, 43, 107)`, `rgb(146, 100, 161)`, `rgb(56, 159, 117)`, `rgb(215, 210, 55)`, `rgb(0, 0, 0)`];
 const WIZARD_EYES = [`black`, `red`, `blue`, `yellow`, `green`];
+const COUNT_WIZARDS = 4;
 
 // 1. Показывает блок setup
 const userDialog = document.querySelector(`.setup`);
 userDialog.classList.remove(`hidden`);
 
 // 2. Генерирует массив волшебников
-let wizards = [
-  {
-    name: WIZARD_NAMES[0],
-    coatColor: `rgb(241, 43, 107)`,
-    eyes: `black`
-  },
-  {
-    name: WIZARD_NAMES[1],
-    coatColor: `rgb(215, 210, 55)`,
-    eyes: `blue`
-  },
-  {
-    name: WIZARD_NAMES[2],
-    coatColor: `rgb(101, 137, 164)`,
-    eyes: `green`
-  },
-  {
-    name: WIZARD_NAMES[3],
-    coatColor: `rgb(127, 127, 127)`,
-    eyes: `red`
-  }
-];
-
 const getRandomIndex = function (array) {
   return array[Math.floor(Math.random() * array.length)];
 };
 
-for (let j = 0; j < 4; j++) {
-  const randomParam = Math.round(Math.random() * 100);
-  if (randomParam % 2 === 0) {
-    wizards[j].name = getRandomIndex(WIZARD_NAMES) + ` ` + getRandomIndex(WIZARD_SURNAMES);
+const generateWizard = function () {
+  const wizard = {};
+
+  if (Math.random() > 0.5) {
+    wizard.name = getRandomIndex(WIZARD_NAMES) + ` ` + getRandomIndex(WIZARD_SURNAMES);
   } else {
-    wizards[j].name = getRandomIndex(WIZARD_SURNAMES) + ` ` + getRandomIndex(WIZARD_NAMES);
+    wizard.name = getRandomIndex(WIZARD_SURNAMES) + ` ` + getRandomIndex(WIZARD_NAMES);
   }
 
-  wizards[j].coatColor = getRandomIndex(WIZARD_COATS);
-  wizards[j].eyes = getRandomIndex(WIZARD_EYES);
-}
+  wizard.coatColor = getRandomIndex(WIZARD_COATS);
+  wizard.eyes = getRandomIndex(WIZARD_EYES);
+
+  return (wizard);
+};
+
+const generateWizards = function (countWizards) {
+  const arr = [];
+
+  for (let j = 0; j < countWizards; j++) {
+    arr[j] = generateWizard();
+    arr.push(arr[j]);
+  }
+  arr.pop();
+
+  return arr;
+};
+
+const wizards = generateWizards(COUNT_WIZARDS);
 
 // 3. Создает DOM-элементы волшбников на основе шаблона
 const similarListElement = userDialog.querySelector(`.setup-similar-list`);
-
 const similarWizardTemplate = document.querySelector(`#similar-wizard-template`)
   .content
   .querySelector(`.setup-similar-item`);
