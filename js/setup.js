@@ -10,7 +10,7 @@ const userDialog = document.querySelector(`.setup`);
 userDialog.classList.remove(`hidden`);
 
 // 2. Генерирует массив волшебников
-const wizards = [
+let wizards = [
   {
     name: WIZARD_NAMES[0],
     coatColor: 'rgb(241, 43, 107)',
@@ -19,17 +19,17 @@ const wizards = [
   {
     name: WIZARD_NAMES[1],
     coatColor: 'rgb(215, 210, 55)',
-    eyes: 'green'
+    eyes: 'blue'
   },
   {
     name: WIZARD_NAMES[2],
     coatColor: 'rgb(101, 137, 164)',
-    eyes: 'blue'
+    eyes: 'green'
   },
   {
     name: WIZARD_NAMES[3],
     coatColor: 'rgb(127, 127, 127)',
-    eyes: 'gray'
+    eyes: 'red'
   }
 ];
 
@@ -38,7 +38,13 @@ const getRandomIndex = function (array) {
 }
 
 for (let j = 0; j < 4; j++) {
-  wizards[j].name = getRandomIndex(WIZARD_NAMES) + ' ' + getRandomIndex(WIZARD_SURNAMES);
+  const randomParam = Math.round(Math.random() * 100);
+  if (randomParam % 2 == 0) {
+    wizards[j].name = getRandomIndex(WIZARD_NAMES) + ' ' + getRandomIndex(WIZARD_SURNAMES);
+  } else {
+    wizards[j].name = getRandomIndex(WIZARD_SURNAMES) + ' ' + getRandomIndex(WIZARD_NAMES);
+  };
+
   wizards[j].coatColor = getRandomIndex(WIZARD_COATS);
   wizards[j].eyes = getRandomIndex(WIZARD_EYES);
 };
