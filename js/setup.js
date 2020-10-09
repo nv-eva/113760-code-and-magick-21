@@ -30,17 +30,8 @@ const generateWizard = function () {
   return (wizard);
 };
 
-const generateWizards = function (countWizards) {
-  const arr = [];
-
-  for (let j = 0; j < countWizards; j++) {
-    arr[j] = generateWizard();
-    arr.push(arr[j]);
-  }
-  arr.pop();
-
-  return arr;
-};
+const generateWizards = (countWizards) =>
+  (new Array(countWizards)).fill(``).map(generateWizard);
 
 const wizards = generateWizards(COUNT_WIZARDS);
 
