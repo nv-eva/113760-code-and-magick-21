@@ -4,6 +4,7 @@ const WIZARD_NAMES = [`Иван`, `Хуан Себастьян`, `Мария`, `
 const WIZARD_SURNAMES = [`да Марья`, `Верон`, `Мирабелла`, `Вальц`, `Онопко`, `Топольницкая`, `Нионго`, `Ирвинг`];
 const WIZARD_COATS = [`rgb(101, 137, 164)`, `rgb(241, 43, 107)`, `rgb(146, 100, 161)`, `rgb(56, 159, 117)`, `rgb(215, 210, 55)`, `rgb(0, 0, 0)`];
 const WIZARD_EYES = [`black`, `red`, `blue`, `yellow`, `green`];
+const FIREBALL = [`#ee4830`, `#30a8ee`, `#5ce6c0`, `#e848d5`, `#e6e848`];
 const COUNT_WIZARDS = 4;
 
 // 1. Открытие и закрытие блока setup
@@ -100,3 +101,27 @@ similarListElement.appendChild(fragment);
 // 5. Показывает блок setup-similar
 const chooseWizards = setup.querySelector(`.setup-similar`);
 chooseWizards.classList.remove(`hidden`);
+
+// Изменяет цвета волшебника по нажатию
+const setupPlayer = document.querySelector(`.setup-player`);
+let wizardCoat = setupPlayer.querySelector(`.setup-wizard .wizard-coat`);
+let wizardEyes = setupPlayer.querySelector(`.setup-wizard .wizard-eyes`);
+let fireball = setupPlayer.querySelector(`.setup-fireball-wrap`);
+
+wizardCoat.addEventListener(`click`, function () {
+  let wizardCoatColor = getRandomIndex(WIZARD_COATS);
+  wizardCoat.style.fill = wizardCoatColor;
+  setupPlayer.querySelector(`[name="coat-color"]`).value = wizardCoatColor;
+});
+
+wizardEyes.addEventListener(`click`, function () {
+  let wizardEyesColor = getRandomIndex(WIZARD_EYES);
+  wizardEyes.style.fill = wizardEyesColor;
+  setupPlayer.querySelector(`[name="eyes-color"]`).value = wizardEyesColor;
+});
+
+fireball.addEventListener(`click`, function () {
+  let fireballColor = getRandomIndex(FIREBALL);
+  fireball.style.backgroundColor = fireballColor;
+  setupPlayer.querySelector(`[name="fireball-color"]`).value = fireballColor;
+});
