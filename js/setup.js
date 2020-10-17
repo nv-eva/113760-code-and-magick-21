@@ -14,12 +14,10 @@ const setupClose = setup.querySelector(`.setup-close`);
 const userNameInput = document.querySelector(`.setup-user-name`);
 
 const onPopupEscPress = function (evt) {
-  userNameInput.addEventListener(`keydown`, function () {
-    if (evt.key === `Escape`) {
-      evt.preventDefault();
-      closePopup();
-    }
-  });
+  if (evt.key === `Escape` && document.activeElement !== userNameInput) {
+    evt.preventDefault();
+    closePopup();
+  }
 };
 
 const openPopup = function () {
@@ -108,7 +106,7 @@ let wizardCoat = setupPlayer.querySelector(`.setup-wizard .wizard-coat`);
 let wizardEyes = setupPlayer.querySelector(`.setup-wizard .wizard-eyes`);
 let fireball = setupPlayer.querySelector(`.setup-fireball-wrap`);
 
-const changeColors = function (element, colors, selector) {
+const changeColor = function (element, colors, selector) {
   let newColor = getRandomIndex(colors);
   element.style.fill = newColor;
   setupPlayer.querySelector(selector).value = newColor;
@@ -121,14 +119,14 @@ const changeBackground = function (element, colors, selector) {
 };
 
 const changeCoatColor = function () {
-  changeColors(wizardCoat, WIZARD_COATS, `[name="coat-color"]`);
+  changeColor(wizardCoat, WIZARD_COATS, `[name="coat-color"]`);
 };
 
 const changeEyesColor = function () {
-  changeColors(wizardEyes, WIZARD_EYES, `[name="eyes-color"]`);
+  changeColor(wizardEyes, WIZARD_EYES, `[name="eyes-color"]`);
 };
 
-const fireballEyesColor = function () {
+const changeFireballColor = function () {
   changeBackground(fireball, FIREBALL, `[name="fireball-color"]`);
 };
 
@@ -141,26 +139,32 @@ wizardEyes.addEventListener(`click`, function () {
 });
 
 fireball.addEventListener(`click`, function () {
-  fireballEyesColor();
+  changeFireballColor();
 });
 
 wizardCoat.addEventListener(`keydown`, function (evt) {
-  changeCoatColor();
-  if (evt.key === `Space`) {
+  if (evt.key === `ArrowLeft`) {
+    changeCoatColor();
+  }
+  if (evt.key === `ArrowRight`) {
     changeCoatColor();
   }
 });
 
 wizardEyes.addEventListener(`keydown`, function (evt) {
-  changeEyesColor();
-  if (evt.key === `Space`) {
+  if (evt.key === `ArrowLeft`) {
+    changeEyesColor();
+  }
+  if (evt.key === `ArrowRight`) {
     changeEyesColor();
   }
 });
 
 fireball.addEventListener(`keydown`, function (evt) {
-  fireballEyesColor();
-  if (evt.key === `Space`) {
-    fireballEyesColor();
+  if (evt.key === `ArrowLeft`) {
+    changeFireballColor();
+  }
+  if (evt.key === `ArrowRight`) {
+    changeFireballColor();
   }
 });
