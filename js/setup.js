@@ -143,19 +143,19 @@ fireball.addEventListener(`click`, function () {
 });
 
 wizardCoat.addEventListener(`keydown`, function (evt) {
-  if (evt.key === ` `) {
+  if (evt.code === `Space`) {
     changeCoatColor();
   }
 });
 
 wizardEyes.addEventListener(`keydown`, function (evt) {
-  if (evt.key === ` `) {
+  if (evt.code === `Space`) {
     changeEyesColor();
   }
 });
 
 fireball.addEventListener(`keydown`, function (evt) {
-  if (evt.key === ` `) {
+  if (evt.code === `Space`) {
     changeFireballColor();
   }
 });
