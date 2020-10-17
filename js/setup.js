@@ -143,28 +143,19 @@ fireball.addEventListener(`click`, function () {
 });
 
 wizardCoat.addEventListener(`keydown`, function (evt) {
-  if (evt.key === `ArrowLeft`) {
-    changeCoatColor();
-  }
-  if (evt.key === `ArrowRight`) {
+  if (evt.key === ` `) {
     changeCoatColor();
   }
 });
 
 wizardEyes.addEventListener(`keydown`, function (evt) {
-  if (evt.key === `ArrowLeft`) {
-    changeEyesColor();
-  }
-  if (evt.key === `ArrowRight`) {
+  if (evt.key === ` `) {
     changeEyesColor();
   }
 });
 
 fireball.addEventListener(`keydown`, function (evt) {
-  if (evt.key === `ArrowLeft`) {
-    changeFireballColor();
-  }
-  if (evt.key === `ArrowRight`) {
+  if (evt.key === ` `) {
     changeFireballColor();
   }
 });
