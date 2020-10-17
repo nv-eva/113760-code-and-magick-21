@@ -7,14 +7,14 @@ const WIZARD_EYES = [`black`, `red`, `blue`, `yellow`, `green`];
 const COUNT_WIZARDS = 4;
 
 // 1. Открытие и закрытие блока setup
-const setup = document.querySelector('.setup');
-const setupOpen = document.querySelector('.setup-open');
-const setupClose = setup.querySelector('.setup-close');
-const userNameInput = document.querySelector('.setup-user-name');
+const setup = document.querySelector(`.setup`);
+const setupOpen = document.querySelector(`.setup-open`);
+const setupClose = setup.querySelector(`.setup-close`);
+const userNameInput = document.querySelector(`.setup-user-name`);
 
 const onPopupEscPress = function (evt) {
-  userNameInput.addEventListener('keydown', function () {
-    if (evt.key === 'Escape') {
+  userNameInput.addEventListener(`keydown`, function () {
+    if (evt.key === `Escape`) {
       evt.preventDefault();
       closePopup();
     }
@@ -22,31 +22,31 @@ const onPopupEscPress = function (evt) {
 };
 
 const openPopup = function () {
-  setup.classList.remove('hidden');
-  document.addEventListener('keydown', onPopupEscPress);
+  setup.classList.remove(`hidden`);
+  document.addEventListener(`keydown`, onPopupEscPress);
 };
 
 const closePopup = function () {
-  setup.classList.add('hidden');
-  document.removeEventListener('keydown', onPopupEscPress);
+  setup.classList.add(`hidden`);
+  document.removeEventListener(`keydown`, onPopupEscPress);
 };
 
-setupOpen.addEventListener('click', function () {
+setupOpen.addEventListener(`click`, function () {
   openPopup();
 });
 
-setupOpen.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
+setupOpen.addEventListener(`keydown`, function (evt) {
+  if (evt.key === `Enter`) {
     openPopup();
   }
 });
 
-setupClose.addEventListener('click', function () {
+setupClose.addEventListener(`click`, function () {
   closePopup();
 });
 
-setupClose.addEventListener('keydown', function (evt) {
-  if (evt.key === 'Enter') {
+setupClose.addEventListener(`keydown`, function (evt) {
+  if (evt.key === `Enter`) {
     closePopup();
   }
 });
