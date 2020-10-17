@@ -10,12 +10,15 @@ const COUNT_WIZARDS = 4;
 const setup = document.querySelector('.setup');
 const setupOpen = document.querySelector('.setup-open');
 const setupClose = setup.querySelector('.setup-close');
+const userNameInput = document.querySelector('.setup-user-name');
 
 const onPopupEscPress = function (evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closePopup();
-  }
+  userNameInput.addEventListener('keydown', function () {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closePopup();
+    }
+  });
 };
 
 const openPopup = function () {
