@@ -6,9 +6,47 @@ const WIZARD_COATS = [`rgb(101, 137, 164)`, `rgb(241, 43, 107)`, `rgb(146, 100, 
 const WIZARD_EYES = [`black`, `red`, `blue`, `yellow`, `green`];
 const COUNT_WIZARDS = 4;
 
-// 1. Показывает блок setup
-const userDialog = document.querySelector(`.setup`);
-userDialog.classList.remove(`hidden`);
+// 1. Открытие и закрытие блока setup
+const setup = document.querySelector('.setup');
+const setupOpen = document.querySelector('.setup-open');
+const setupClose = setup.querySelector('.setup-close');
+
+const onPopupEscPress = function (evt) {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closePopup();
+  }
+};
+
+const openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+const closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.key === 'Enter') {
+    closePopup();
+  }
+});
 
 // 2. Генерирует массив волшебников
 const getRandomIndex = function (array) {
@@ -36,7 +74,7 @@ const generateWizards = (countWizards) =>
 const wizards = generateWizards(COUNT_WIZARDS);
 
 // 3. Создает DOM-элементы волшбников на основе шаблона
-const similarListElement = userDialog.querySelector(`.setup-similar-list`);
+const similarListElement = setup.querySelector(`.setup-similar-list`);
 const similarWizardTemplate = document.querySelector(`#similar-wizard-template`)
   .content
   .querySelector(`.setup-similar-item`);
@@ -57,5 +95,5 @@ for (let i = 0; i < wizards.length; i++) {
 similarListElement.appendChild(fragment);
 
 // 5. Показывает блок setup-similar
-const chooseWizards = userDialog.querySelector(`.setup-similar`);
+const chooseWizards = setup.querySelector(`.setup-similar`);
 chooseWizards.classList.remove(`hidden`);
