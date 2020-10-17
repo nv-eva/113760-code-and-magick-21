@@ -108,20 +108,59 @@ let wizardCoat = setupPlayer.querySelector(`.setup-wizard .wizard-coat`);
 let wizardEyes = setupPlayer.querySelector(`.setup-wizard .wizard-eyes`);
 let fireball = setupPlayer.querySelector(`.setup-fireball-wrap`);
 
+const changeColors = function (element, colors, selector) {
+  let newColor = getRandomIndex(colors);
+  element.style.fill = newColor;
+  setupPlayer.querySelector(selector).value = newColor;
+};
+
+const changeBackground = function (element, colors, selector) {
+  let newColor = getRandomIndex(colors);
+  element.style.backgroundColor = newColor;
+  setupPlayer.querySelector(selector).value = newColor;
+};
+
+const changeCoatColor = function () {
+  changeColors(wizardCoat, WIZARD_COATS, `[name="coat-color"]`);
+};
+
+const changeEyesColor = function () {
+  changeColors(wizardEyes, WIZARD_EYES, `[name="eyes-color"]`);
+};
+
+const fireballEyesColor = function () {
+  changeBackground(fireball, FIREBALL, `[name="fireball-color"]`);
+};
+
 wizardCoat.addEventListener(`click`, function () {
-  let wizardCoatColor = getRandomIndex(WIZARD_COATS);
-  wizardCoat.style.fill = wizardCoatColor;
-  setupPlayer.querySelector(`[name="coat-color"]`).value = wizardCoatColor;
+  changeCoatColor();
 });
 
 wizardEyes.addEventListener(`click`, function () {
-  let wizardEyesColor = getRandomIndex(WIZARD_EYES);
-  wizardEyes.style.fill = wizardEyesColor;
-  setupPlayer.querySelector(`[name="eyes-color"]`).value = wizardEyesColor;
+  changeEyesColor();
 });
 
 fireball.addEventListener(`click`, function () {
-  let fireballColor = getRandomIndex(FIREBALL);
-  fireball.style.backgroundColor = fireballColor;
-  setupPlayer.querySelector(`[name="fireball-color"]`).value = fireballColor;
+  fireballEyesColor();
+});
+
+wizardCoat.addEventListener(`keydown`, function (evt) {
+  changeCoatColor();
+  if (evt.key === `Space`) {
+    changeCoatColor();
+  }
+});
+
+wizardEyes.addEventListener(`keydown`, function (evt) {
+  changeEyesColor();
+  if (evt.key === `Space`) {
+    changeEyesColor();
+  }
+});
+
+fireball.addEventListener(`keydown`, function (evt) {
+  fireballEyesColor();
+  if (evt.key === `Space`) {
+    fireballEyesColor();
+  }
 });
