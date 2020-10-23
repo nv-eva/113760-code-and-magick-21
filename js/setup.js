@@ -55,70 +55,11 @@
   chooseWizards.classList.remove(`hidden`);
 
   // Изменяет цвета волшебника по нажатию
-  let wizardCoat = window.colorize.setupPlayer.querySelector(`.setup-wizard .wizard-coat`);
-  let wizardEyes = window.colorize.setupPlayer.querySelector(`.setup-wizard .wizard-eyes`);
-  let fireball = window.colorize.setupPlayer.querySelector(`.setup-fireball-wrap`);
+  let wizardCoat = window.setupPlayer.querySelector(`.setup-wizard .wizard-coat`);
+  let wizardEyes = window.setupPlayer.querySelector(`.setup-wizard .wizard-eyes`);
+  let fireball = window.setupPlayer.querySelector(`.setup-fireball-wrap`);
 
-  window.colorize.colorizeElement(wizardCoat, WIZARD_COATS, `[name="coat-color"]`);
-  window.colorize.colorizeElement(wizardEyes, WIZARD_EYES, `[name="eyes-color"]`);
-  window.colorize.colorizeElement(fireball, FIREBALL, `[name="fireball-color"]`);
+  window.colorize(wizardCoat, WIZARD_COATS, `[name="coat-color"]`);
+  window.colorize(wizardEyes, WIZARD_EYES, `[name="eyes-color"]`);
+  window.colorize(fireball, FIREBALL, `[name="fireball-color"]`);
 })();
-
-
-/*
-const setupPlayer = document.querySelector(`.setup-player`);
-
-const changeColor = function (element, colors, selector) {
-  let newColor = getRandomIndex(colors);
-  element.style.fill = newColor;
-  setupPlayer.querySelector(selector).value = newColor;
-};
-
-const changeBackground = function (element, colors, selector) {
-  let newColor = getRandomIndex(colors);
-  element.style.backgroundColor = newColor;
-  setupPlayer.querySelector(selector).value = newColor;
-};
-
-const changeCoatColor = function () {
-  changeColor(wizardCoat, WIZARD_COATS, `[name="coat-color"]`);
-};
-
-const changeEyesColor = function () {
-  changeColor(wizardEyes, WIZARD_EYES, `[name="eyes-color"]`);
-};
-
-const changeFireballColor = function () {
-  changeBackground(fireball, FIREBALL, `[name="fireball-color"]`);
-};
-
-wizardCoat.addEventListener(`click`, function () {
-  changeCoatColor();
-});
-
-wizardEyes.addEventListener(`click`, function () {
-  changeEyesColor();
-});
-
-fireball.addEventListener(`click`, function () {
-  changeFireballColor();
-});
-
-wizardCoat.addEventListener(`keydown`, function (evt) {
-  if (evt.code === `Space`) {
-    changeCoatColor();
-  }
-});
-
-wizardEyes.addEventListener(`keydown`, function (evt) {
-  if (evt.code === `Space`) {
-    changeEyesColor();
-  }
-});
-
-fireball.addEventListener(`keydown`, function (evt) {
-  if (evt.code === `Space`) {
-    changeFireballColor();
-  }
-});
-*/
