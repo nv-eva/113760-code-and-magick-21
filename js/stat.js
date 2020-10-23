@@ -27,9 +27,9 @@ const renderText = function (ctx, text, x, y) {
 };
 
 const getMaxElement = function (arr) {
-  const maxElement = arr[0];
+  let maxElement = arr[0];
 
-  for (const k = 1; k < arr.length; k++) {
+  for (let k = 1; k < arr.length; k++) {
     if (arr[k] > maxElement) {
       maxElement = arr[k];
     }
@@ -54,7 +54,7 @@ window.renderStatistics = function (ctx, players, times) {
       `rgba(0, 0, 0, 0.5)`
   );
 
-  for (const i = 0; i < statisticsTitle.length; i++) {
+  for (let i = 0; i < statisticsTitle.length; i++) {
     renderText(
         ctx,
         statisticsTitle[i],
@@ -65,7 +65,7 @@ window.renderStatistics = function (ctx, players, times) {
 
   const maxTime = getMaxElement(times);
 
-  for (const j = 0; j < players.length; j++) {
+  for (let j = 0; j < players.length; j++) {
     const barX = CLOUD_X + GAP_BAR + (GAP_BAR + BAR_WIDTH) * j;
     const barY = CLOUD_Y + GAP_TEXT * (statisticsTitle.length + 1) + BAR_HEIGHT + 3;
     const barHeightCurrent = (BAR_HEIGHT * times[j]) / maxTime;
