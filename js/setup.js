@@ -40,11 +40,9 @@
 
   const renderWizard = function (wizard) {
     const wizardElement = similarWizardTemplate.cloneNode(true);
-
     wizardElement.querySelector(`.setup-similar-label`).textContent = wizard.name;
     wizardElement.querySelector(`.wizard-coat`).style.fill = wizard.colorCoat; // coatColor
     wizardElement.querySelector(`.wizard-eyes`).style.fill = wizard.colorEyes; // eyes
-
     return wizardElement;
   };
 
