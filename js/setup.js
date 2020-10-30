@@ -81,10 +81,12 @@
   // Отправляет данные с формы
   const form = window.setup.querySelector(`.setup-wizard-form`);
 
+  const closeSetup = function () {
+    window.setup.classList.add(`hidden`);
+  };
+
   const submitHandler = function (evt) {
-    window.backend.save(new FormData(form), function () {
-      window.setup.classList.add(`hidden`);
-    });
+    window.backend.save(new FormData(form), closeSetup, errorHandler);
     evt.preventDefault();
   };
 
