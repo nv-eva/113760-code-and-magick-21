@@ -47,7 +47,7 @@
   };
 
   // Вставляет сгенерированные элементы на страницу
-  window.backend.load(function (wizards) {
+  const successHandler = function (wizards) {
     const fragment = document.createDocumentFragment();
 
     let countWizards = COUNT_WIZARDS;
@@ -58,11 +58,38 @@
     for (let i = 0; i < countWizards; i++) {
       fragment.appendChild(renderWizard(wizards[i]));
     }
-
     similarListElement.appendChild(fragment);
 
     window.setup.querySelector(`.setup-similar`).classList.remove(`hidden`);
-  }, function () {});
+  };
+
+  const errorHandler = function (errorMessage) {
+    const node = document.createElement(`div`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
+    node.style.position = `absolute`;
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = `30px`;
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
+  };
+
+  window.backend.load(successHandler, errorHandler);
+
+
+  // Отправляет данные с формы
+  const form = window.setup.querySelector(`.setup-wizard-form`);
+
+  const submitHandler = function (evt) {
+    window.backend.save(new FormData(form), function () {
+      window.setup.classList.add(`hidden`);
+    });
+    evt.preventDefault();
+  };
+
+  form.addEventListener(`submit`, submitHandler);
+
 
   // Изменяет цвета волшебника по нажатию
   let wizardCoat = window.setupPlayer.querySelector(`.setup-wizard .wizard-coat`);

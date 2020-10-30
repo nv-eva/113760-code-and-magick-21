@@ -4,7 +4,6 @@
   const setup = document.querySelector(`.setup`);
   const setupOpen = document.querySelector(`.setup-open`);
   const setupClose = setup.querySelector(`.setup-close`);
-  const form = setup.querySelector(`.setup-wizard-form`);
   const userNameInput = document.querySelector(`.setup-user-name`);
 
   const onPopupEscPress = function (evt) {
@@ -38,13 +37,6 @@
 
   setupClose.addEventListener(`keydown`, function (evt) {
     window.util.isEnterEvent(evt, closePopup);
-  });
-
-  form.addEventListener(`submit`, function (evt) {
-    window.backend.save(new FormData(form), function (response) {
-      setup.classList.add(`hidden`);
-    });
-    evt.preventDefault();
   });
 
   window.setup = setup;
