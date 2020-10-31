@@ -2,19 +2,19 @@
 
 (function () {
   window.util = {
-    isEnterEvent: function (evt, action) {
+    isEnterEvent(evt, action) {
       if (evt.key === `Enter`) {
         action();
       }
     },
 
-    isSpaceEvent: function (evt, action) {
+    isSpaceEvent(evt, action) {
       if (evt.code === `Space`) {
         action();
       }
     },
 
-    getRandomIndex: function (array) {
+    getRandomIndex(array) {
       return array[Math.floor(Math.random() * array.length)];
     }
   };
