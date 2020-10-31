@@ -86,8 +86,8 @@
   };
 
   const submitHandler = function (evt) {
-    window.backend.save(new FormData(form), closeSetup, errorHandler);
     evt.preventDefault();
+    window.backend.save(new FormData(form), closeSetup, errorHandler);
   };
 
   form.addEventListener(`submit`, submitHandler);
