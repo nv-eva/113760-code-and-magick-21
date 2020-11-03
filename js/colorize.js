@@ -16,7 +16,7 @@
 
       setupPlayer.querySelector(selector).value = newColor;
 
-      window.setup.updateWizards();
+      window.debounce(window.setup.updateWizards);
     };
 
     element.addEventListener(`mouseover`, function () {
