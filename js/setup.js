@@ -46,7 +46,7 @@
     return wizardElement;
   };
 
-  // Вставляет сгенерированные элементы на страницу
+  // Вставляет отсортированные элементы на страницу
   let wizards = [];
 
   const render = function (wizardsArray) {
@@ -67,31 +67,39 @@
     window.setup.querySelector(`.setup-similar`).classList.remove(`hidden`);
   };
 
-  const updateWizards = function () {
+  const getRank = function (wizard) {
     let coatColor = window.setupPlayer.querySelector(`[name="coat-color"]`).value;
     let eyesColor = window.setupPlayer.querySelector(`[name="eyes-color"]`).value;
+    let rank = 0;
 
-    const sameCoatAndEyesWizards = wizards.filter(function (wizard) {
-      return wizard.colorCoat === coatColor &&
-        wizard.colorEyes === eyesColor;
-    });
-    const sameCoatWizards = wizards.filter(function (wizard) {
-      return wizard.colorCoat === coatColor;
-    });
-    const sameEyesWizards = wizards.filter(function (wizard) {
-      return wizard.colorEyes === eyesColor;
-    });
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
 
-    let filteredWizards = sameCoatAndEyesWizards;
-    filteredWizards = filteredWizards.concat(sameCoatWizards);
-    filteredWizards = filteredWizards.concat(sameEyesWizards);
-    filteredWizards = filteredWizards.concat(wizards);
+    return rank;
+  };
 
-    const uniqueWizards = filteredWizards.filter(function (wizard, index) {
-      return filteredWizards.indexOf(wizard) === index;
-    });
+  const namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
 
-    render(uniqueWizards);
+  const updateWizards = function () {
+    render(wizards.sort(function (left, right) {
+      let rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
+      }
+      return rankDiff;
+    }));
   };
 
   const successHandler = function (data) {
