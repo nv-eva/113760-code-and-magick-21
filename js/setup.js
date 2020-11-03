@@ -69,13 +69,29 @@
 
   const updateWizards = function () {
     let coatColor = window.setupPlayer.querySelector(`[name="coat-color"]`).value;
-    // let eyesColor = window.setupPlayer.querySelector(`[name="eyes-color"]`).value;
+    let eyesColor = window.setupPlayer.querySelector(`[name="eyes-color"]`).value;
 
+    const sameCoatAndEyesWizards = wizards.filter(function (wizard) {
+      return wizard.colorCoat === coatColor &&
+        wizard.colorEyes === eyesColor;
+    });
     const sameCoatWizards = wizards.filter(function (wizard) {
       return wizard.colorCoat === coatColor;
     });
+    const sameEyesWizards = wizards.filter(function (wizard) {
+      return wizard.colorEyes === eyesColor;
+    });
 
-    render(sameCoatWizards);
+    let filteredWizards = sameCoatAndEyesWizards;
+    filteredWizards = filteredWizards.concat(sameCoatWizards);
+    filteredWizards = filteredWizards.concat(sameEyesWizards);
+    filteredWizards = filteredWizards.concat(wizards);
+
+    const uniqueWizards = filteredWizards.filter(function (wizard, index) {
+      return filteredWizards.indexOf(wizard) === index;
+    });
+
+    render(uniqueWizards);
   };
 
   const successHandler = function (data) {
