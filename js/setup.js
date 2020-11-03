@@ -46,21 +46,65 @@
     return wizardElement;
   };
 
-  // Вставляет сгенерированные элементы на страницу
-  const successHandler = function (wizards) {
+  // Вставляет отсортированные элементы на страницу
+  let wizards = [];
+
+  const render = function (wizardsArray) {
     const fragment = document.createDocumentFragment();
 
     let countWizards = COUNT_WIZARDS;
-    if (wizards.length < COUNT_WIZARDS) {
-      countWizards = wizards.length;
+    if (wizardsArray.length < COUNT_WIZARDS) {
+      countWizards = wizardsArray.length;
     }
 
+    similarListElement.innerHTML = ``;
+
     for (let i = 0; i < countWizards; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
+      fragment.appendChild(renderWizard(wizardsArray[i]));
     }
     similarListElement.appendChild(fragment);
 
     window.setup.querySelector(`.setup-similar`).classList.remove(`hidden`);
+  };
+
+  const getRank = function (wizard) {
+    let coatColor = window.setupPlayer.querySelector(`[name="coat-color"]`).value;
+    let eyesColor = window.setupPlayer.querySelector(`[name="eyes-color"]`).value;
+    let rank = 0;
+
+    if (wizard.colorCoat === coatColor) {
+      rank += 2;
+    }
+    if (wizard.colorEyes === eyesColor) {
+      rank += 1;
+    }
+
+    return rank;
+  };
+
+  const namesComparator = function (left, right) {
+    if (left > right) {
+      return 1;
+    } else if (left < right) {
+      return -1;
+    } else {
+      return 0;
+    }
+  };
+
+  const updateWizards = function () {
+    render(wizards.sort(function (left, right) {
+      let rankDiff = getRank(right) - getRank(left);
+      if (rankDiff === 0) {
+        rankDiff = namesComparator(left.name, right.name);
+      }
+      return rankDiff;
+    }));
+  };
+
+  const successHandler = function (data) {
+    wizards = data;
+    updateWizards();
   };
 
   const errorHandler = function (errorMessage) {
@@ -86,8 +130,8 @@
   };
 
   const submitHandler = function (evt) {
-    window.backend.save(new FormData(form), closeSetup, errorHandler);
     evt.preventDefault();
+    window.backend.save(new FormData(form), closeSetup, errorHandler);
   };
 
   form.addEventListener(`submit`, submitHandler);
@@ -101,4 +145,6 @@
   window.colorize(wizardCoat, WIZARD_COATS, `[name="coat-color"]`);
   window.colorize(wizardEyes, WIZARD_EYES, `[name="eyes-color"]`);
   window.colorize(fireball, FIREBALL, `[name="fireball-color"]`);
+
+  window.setup.updateWizards = updateWizards;
 })();
