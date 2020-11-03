@@ -47,20 +47,40 @@
   };
 
   // Вставляет сгенерированные элементы на страницу
-  const successHandler = function (wizards) {
+  let wizards = [];
+
+  const render = function (wizardsArray) {
     const fragment = document.createDocumentFragment();
 
     let countWizards = COUNT_WIZARDS;
-    if (wizards.length < COUNT_WIZARDS) {
-      countWizards = wizards.length;
+    if (wizardsArray.length < COUNT_WIZARDS) {
+      countWizards = wizardsArray.length;
     }
 
+    similarListElement.innerHTML = ``;
+
     for (let i = 0; i < countWizards; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
+      fragment.appendChild(renderWizard(wizardsArray[i]));
     }
     similarListElement.appendChild(fragment);
 
     window.setup.querySelector(`.setup-similar`).classList.remove(`hidden`);
+  };
+
+  const updateWizards = function () {
+    let coatColor = window.setupPlayer.querySelector(`[name="coat-color"]`).value;
+    // let eyesColor = window.setupPlayer.querySelector(`[name="eyes-color"]`).value;
+
+    const sameCoatWizards = wizards.filter(function (wizard) {
+      return wizard.colorCoat === coatColor;
+    });
+
+    render(sameCoatWizards);
+  };
+
+  const successHandler = function (data) {
+    wizards = data;
+    updateWizards();
   };
 
   const errorHandler = function (errorMessage) {
@@ -101,4 +121,6 @@
   window.colorize(wizardCoat, WIZARD_COATS, `[name="coat-color"]`);
   window.colorize(wizardEyes, WIZARD_EYES, `[name="eyes-color"]`);
   window.colorize(fireball, FIREBALL, `[name="fireball-color"]`);
+
+  window.setup.updateWizards = updateWizards;
 })();

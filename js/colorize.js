@@ -6,15 +6,17 @@
 
   window.colorize = function (element, colors, selector) {
     const changeColor = function () {
-      const color = window.util.getRandomIndex(colors);
+      const newColor = window.util.getRandomIndex(colors);
 
       if (element.tagName.toLowerCase() === `div`) {
-        element.style.backgroundColor = color;
+        element.style.backgroundColor = newColor;
       } else {
-        element.style.fill = color;
+        element.style.fill = newColor;
       }
 
-      setupPlayer.querySelector(selector).value = color;
+      setupPlayer.querySelector(selector).value = newColor;
+
+      window.setup.updateWizards();
     };
 
     element.addEventListener(`mouseover`, function () {
