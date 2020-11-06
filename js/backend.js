@@ -1,4 +1,5 @@
 'use strict';
+
 (function () {
   const URL_LOAD = `https://21.javascript.pages.academy/code-and-magick/data`;
   const URL_SAVE = `https://21.javascript.pages.academy/code-and-magick`;
